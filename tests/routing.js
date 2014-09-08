@@ -85,7 +85,7 @@ var expect = require('chai').expect;
 				
 				mock.navigate('?/p/12/3/other/456');
 				routing.setRoutes({
-					'/p/:several.../other/:id': Parcel.subClass({
+					'/p/:several*/other/:id': Parcel.subClass({
 						init: function (config) {
 							expect(config).eql({route:'/p/12/3/other/456',id:'456', several:'12/3'});
 						},
@@ -121,7 +121,6 @@ var expect = require('chai').expect;
 				mock.reset();
 				
 				mock.navigate('/p/789?a=b&c=d');
-				routing.mode = 'pathname';
 				routing.setRoutes({
 					'/p/:id': Parcel.subClass({
 						init: function (config) {
@@ -135,7 +134,7 @@ var expect = require('chai').expect;
 						}
 							
 					})
-				});
+				},'pathname');
 			});
 		}
 	});

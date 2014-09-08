@@ -122,31 +122,32 @@ module.exports = function (window) {
 		
 		_routeByValue: function (path) {
 			r._routeParams = {};
-			var routes = r.routes;
+			var routes = r.routes, matches;
 
 			var queryStart = path.indexOf("?");
 			if (queryStart !== -1) {
 				r._routeParams = r._parseQueryString(path.substr(queryStart + 1, path.length));
 				path = path.substr(0, queryStart);
 			}
+			if (r.mode === 'pathname') {
+				r._routeParams = r._parseQueryString(winLoc.search.substr(1));
+			}
+				
 			r._routeParams.route = path;
 
-			return routes.some(function (Parcel, route) {
+			return routes.some(function (config, route) {
 				if (route == path) {
-					rootApp(new Parcel(r._routeParams), r.rootNode);
+					rootApp(new config.parcel(r._routeParams), r.rootNode);
 					return true;
 				}
-
-				var matcher = new RegExp("^" + route.replace(/:[^\/]+?\.{3}/g, "(.*?)").replace(/:[^\/]+/g, "([^\\/]+)") + "\/?$");
-
-				if (matcher.test(path)) {
-					path.replace(matcher, function() {
-						var values = [].slice.call(arguments, 1, -2);
-						(route.match(/:[^\/]+/g) || []).forEach(function (key, i) {
-							r._routeParams[key.replace(/:|\./g, "")] = decodeURIComponent(values[i]);
-						});
-						rootApp(new Parcel(r._routeParams), r.rootNode);
+				/*jshint -W084 */
+				if (matches = config.rx.exec(path)) {
+				/*jshint +W084 */
+					
+					config.names.forEach(function (name, i) {
+						r._routeParams[name] = decodeURIComponent(matches[i +1]);
 					});
+					rootApp(new config.parcel(r._routeParams), r.rootNode);
 					return true;
 				}
 			});
@@ -190,7 +191,9 @@ module.exports = function (window) {
 		@param [rootNode] {DOM Element} Where to render the given Parcel. Defaults to `document.body`.
 		*/
 		setRoutes: function (routes, mode, defaultRoute, rootNode) {
-			r.routes = routes.shallowClone();
+			routes.each(function (parcel, route) {
+				r.setRoute(route, parcel);
+			});
 			if (mode !== undefined) {
 				if (mode in r._modes) {
 					r.mode = mode;
@@ -219,7 +222,6 @@ module.exports = function (window) {
 			};
 			var listener = r.mode == "hash" ? "onhashchange" : "onpopstate";
 			window[listener] = function () {
-				console.log(r._currentRoute, normalizeRoute(winLoc[r.mode]));
 				if (r._currentRoute != normalizeRoute(winLoc[r.mode])) {
 					r._redirect(winLoc[r.mode]);
 				}
@@ -284,23 +286,30 @@ module.exports = function (window) {
 		
 		@method setRoute
 		@chainable
-		@param url {String |regex} url template of the route to set or replace 
+		@param route {String |regex} url template of the route to set or replace 
 			or a regular expression that should match the route.
 		@param parcel {Parcel} sub-class of Parcel to instantiate to handle this route
 		*/
-		setRoute: function (url, parcel, index) {
-			r.routes[url] = parcel;
-			return r;
+		setRoute: function (route, parcel) {
+			var names = [], name, match = /:([^\/\*]+)/g;
+			while ((name = match.exec(route)) !== null) {
+				names.push(name[1]);
+			}
+			r.routes[route] = {
+				parcel:parcel, 
+				rx: new RegExp("^" + route.replace(/:\w+\*/g, "(.*?)").replace(/:\w+/g, "([^\\/]+)") + "\/?$"),
+				names: names
+			};
 		},
 
 		/** 
 		Removes the given route from the routing table.
 		@method removeRoute
 		@chainable
-		@param url {String} route to remove
+		@param route {String} route to remove
 		*/
-		removeRoute: function (url) {
-			delete r.routes[url];
+		removeRoute: function (route) {
+			delete r.routes[route];
 			return r;
 		}
 	};
