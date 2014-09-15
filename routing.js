@@ -137,7 +137,7 @@ module.exports = function (window) {
 
 			return routes.some(function (config, route) {
 				if (route == path) {
-					rootApp(new config.parcel(r._routeParams), r.rootNode);
+					rootApp(config.parcel, r.rootNode, r._routeParams);
 					return true;
 				}
 				/*jshint -W084 */
@@ -147,7 +147,7 @@ module.exports = function (window) {
 					config.names.forEach(function (name, i) {
 						r._routeParams[name] = decodeURIComponent(matches[i +1]);
 					});
-					rootApp(new config.parcel(r._routeParams), r.rootNode);
+					rootApp(config.parcel, r.rootNode, r._routeParams);
 					return true;
 				}
 			});
