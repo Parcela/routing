@@ -1,56 +1,53 @@
 {
-	"name": "routing",
-	"version": "0.1.0",
-	"description": "Parcela's Routing mechanism",
-	"author": {
-		"name": "Daniel Barreiro",
-		"email": "devasatyam@gmail.com"
-	},
-	"licenses": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Parcela/routing"
-	},
-	"bugs": {
-		"url": "https://github.com/Parcela/routing/issues"
-	},
-	"keywords": [
-		"Parcela",
-		"routing"
-	],
-	"main": "routing.js",
-	"dependencies": {
-		"virtual-dom":"Parcela/virtual-dom",
-		"lang-ext": "Parcela/lang-ext"
-	},
-	"devDependencies": {
-		"chai": "^1.9.1",
-		"istanbul": "^0.3.0",
-		"jshint": "^2.5.5",
-		"mocha": "^1.21.4",
-		
-		"fake-dom": "Parcela/fake-dom",
-		"parcel": "Parcela/parcel"
-	},
-	"engines": {
-		"node": "*"
-	},
-
-	"scripts": {
-		"pretest": "jshint ./routing.js",
-		"test": "mocha tests/*.js  && istanbul cover $(which _mocha) -- tests/*.js",
-		"lint": "jshint ./routing.js"
-	},
-	"homepage": "http://Parcela.github.io",
-	"maintainers": [
-		{
-			"name": "Daniel Barreiro",
-			"email": "devasatyam@gmail.com"
-    	},
-		{
-			"name": "Marco Asbreuk",
-			"email": "marco@itsasbreuk.nl"
-    	}
-  	]
-
+    "name": "routing",
+    "version": "0.0.7",
+    "description": "Parcela's Routing mechanism",
+    "author": {
+        "name": "Daniel Barreiro",
+        "email": "devasatyam@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Parcela/routing"
+    },
+    "bugs": {
+        "url": "https://github.com/Parcela/routing/issues"
+    },
+    "keywords": [
+        "Parcela",
+        "routing"
+    ],
+    "main": "routing.js",
+    "dependencies": {
+        "virtual-dom": "git://github.com/Parcela/virtual-dom.git#v0.0.7",
+        "lang-ext": "git://github.com/Parcela/lang-ext.git#v0.0.7"
+    },
+    "devDependencies": {
+        "chai": "^1.9.1",
+        "istanbul": "^0.3.0",
+        "jshint": "^2.5.5",
+        "mocha": "^1.21.4",
+        "fake-dom": "git://github.com/Parcela/fake-dom.git#v0.0.7",
+        "parcel": "git://github.com/Parcela/parcel.git#v0.0.7"
+    },
+    "engines": {
+        "node": "*"
+    },
+    "scripts": {
+        "pretest": "jshint ./routing.js",
+        "test": "mocha tests/*.js  && istanbul cover $(which _mocha) -- tests/*.js",
+        "lint": "jshint ./routing.js"
+    },
+    "homepage": "http://Parcela.github.io",
+    "maintainers": [
+        {
+            "name": "Daniel Barreiro",
+            "email": "devasatyam@gmail.com"
+        },
+        {
+            "name": "Marco Asbreuk",
+            "email": "marco@itsasbreuk.nl"
+        }
+    ],
+    "license": "BSD 3-clause"
 }
