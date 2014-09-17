@@ -19,16 +19,16 @@
     ],
     "main": "routing.js",
     "dependencies": {
-        "virtual-dom": "git://github.com/Parcela/virtual-dom.git#v0.0.7",
-        "lang-ext": "git://github.com/Parcela/lang-ext.git#v0.0.7"
+        "virtual-dom": "Parcela/virtual-dom",
+        "lang-ext": "Parcela/lang-ext"
     },
     "devDependencies": {
         "chai": "^1.9.1",
         "istanbul": "^0.3.0",
         "jshint": "^2.5.5",
         "mocha": "^1.21.4",
-        "fake-dom": "git://github.com/Parcela/fake-dom.git#v0.0.7",
-        "parcel": "git://github.com/Parcela/parcel.git#v0.0.7"
+        "fake-dom": "Parcela/fake-dom",
+        "parcel": "Parcela/parcel"
     },
     "engines": {
         "node": "*"
